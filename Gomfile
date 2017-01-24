@@ -1,0 +1,1 @@
+gom 'github.com/jarcoal/httpmock', :tag => 'v1'

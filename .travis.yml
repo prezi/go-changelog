@@ -1,0 +1,17 @@
+language: go
+go:
+  - tip
+env:
+  - GOARCH: amd64
+  - GOARCH: 386
+before_install:
+  - go get github.com/mattn/gom
+script:
+  - $HOME/gopath/bin/gom install
+  - $HOME/gopath/bin/gom test -v
+notifications:
+  email:
+    recipients:
+      - wooh@wooh.hu
+    on_success: change
+    on_failure: always
