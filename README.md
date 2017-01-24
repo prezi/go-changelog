@@ -28,7 +28,6 @@ go get github.com/woohgit/go-changelog
 * Custom headers
 * Support for BasicAuth
 
-
 ## Examples
 
 ```Go
