@@ -28,21 +28,21 @@ func TestSeverity(t *testing.T) {
 // TestNewWithDefaultValues verifies that the default variables are properly initialized
 func TestNewWithDefaultValues(t *testing.T) {
 	c := New("", "", "", "", "")
-	assertEqual(t, "http://localhost", c.Host, "Default host should be http://localhost")
-	assertEqual(t, "", c.Port, "Default port should be empty")
-	assertEqual(t, "/api/events", c.Endpoint, "Default endpoint should be /api/events")
-	assertEqual(t, "misc", c.Category, "Default category should be misc")
-	assertEqual(t, "INFO", c.Severity, "Default severity should be INFO")
+	assertEqual(t, "http://localhost", c.host, "Default host should be http://localhost")
+	assertEqual(t, "", c.port, "Default port should be empty")
+	assertEqual(t, "/api/events", c.endpoint, "Default endpoint should be /api/events")
+	assertEqual(t, "misc", c.category, "Default category should be misc")
+	assertEqual(t, "INFO", c.severity, "Default severity should be INFO")
 }
 
 // TestNewWithCustomValues verifies that the custom variables are properly initialized
 func TestNewWithCustomValues(t *testing.T) {
 	c := New("https://serverurl", "8080", "/customurl/api/events", "production", "WARNING")
-	assertEqual(t, "https://serverurl", c.Host, "Host should be https://serverurl")
-	assertEqual(t, "8080", c.Port, "Port should be 8080")
-	assertEqual(t, "/customurl/api/events", c.Endpoint, "Endpoint should be /customurl/api/events")
-	assertEqual(t, "production", c.Category, "Category should be production")
-	assertEqual(t, "WARNING", c.Severity, "Severity should be WARNING")
+	assertEqual(t, "https://serverurl", c.host, "Host should be https://serverurl")
+	assertEqual(t, "8080", c.port, "Port should be 8080")
+	assertEqual(t, "/customurl/api/events", c.endpoint, "Endpoint should be /customurl/api/events")
+	assertEqual(t, "production", c.category, "Category should be production")
+	assertEqual(t, "WARNING", c.severity, "Severity should be WARNING")
 }
 
 // TestBuildUrl will verify that the buildUrl generates the proper URL
@@ -56,8 +56,8 @@ func TestAddExtraHeaders(t *testing.T) {
 	c := New("", "", "", "", "")
 	extraHeaders := map[string]string{"username": "foo", "password": "bar"}
 	c.AddExtraHeaders(extraHeaders)
-	assertEqual(t, "foo", c.ExtraHeaders["username"], "Username should be foo")
-	assertEqual(t, "bar", c.ExtraHeaders["password"], "Password should be bar")
+	assertEqual(t, "foo", c.extraHeaders["username"], "Username should be foo")
+	assertEqual(t, "bar", c.extraHeaders["password"], "Password should be bar")
 }
 
 // TestAddExtraHeaders will verify thet the function can be safely called
@@ -65,7 +65,7 @@ func TestAddExtraFields(t *testing.T) {
 	c := New("", "", "", "", "")
 	extraFields := map[string]string{"environment": "production"}
 	c.AddExtraFields(extraFields)
-	assertEqual(t, "production", c.ExtraFields["environment"], "Environment should be production")
+	assertEqual(t, "production", c.extraFields["environment"], "Environment should be production")
 }
 
 // TestSend will verify thata Send can be safely called

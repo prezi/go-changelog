@@ -19,15 +19,15 @@ const (
 
 // Changelog struct to hold the provided options
 type Changelog struct {
-	Host         string            // Changelog server host
-	Port         string            // Changelog server port
-	Endpoint     string            // Endpoint defaults to /api/events
-	Category     string            // Category defaults to misc
-	Severity     string            // Severity defaults to "INFO"
-	AuthUser     string            // BasicAuth user
-	AuthPassword string            // BasicAuth password
-	ExtraHeaders map[string]string // Extra headers for auth for example
-	ExtraFields  map[string]string // Extra fields
+	host         string            // changelog server host
+	port         string            // changelog server port
+	endpoint     string            // endpoint defaults to /api/events
+	category     string            // category defaults to misc
+	severity     string            // severity defaults to "INFO"
+	authUser     string            // basicAuth user
+	authPassword string            // basicAuth password
+	extraHeaders map[string]string // extra headers for auth for example
+	extraFields  map[string]string // extra fields
 }
 
 var severityLookup = map[string]int{
@@ -60,23 +60,23 @@ func New(host string, port string, endpoint string, category string, severity st
 	}
 
 	return &Changelog{
-		Host:         host,
-		Port:         port,
-		Endpoint:     endpoint,
-		Category:     category,
-		Severity:     severity,
-		ExtraHeaders: map[string]string{},
-		ExtraFields:  map[string]string{},
+		host:         host,
+		port:         port,
+		endpoint:     endpoint,
+		category:     category,
+		severity:     severity,
+		extraHeaders: map[string]string{},
+		extraFields:  map[string]string{},
 	}
 }
 
 func (c *Changelog) buildUrl() string {
 	var url string
 
-	if c.Port != "" {
-		url = fmt.Sprintf("%s:%s%s", c.Host, c.Port, c.Endpoint)
+	if c.port != "" {
+		url = fmt.Sprintf("%s:%s%s", c.host, c.port, c.endpoint)
 	} else {
-		url = fmt.Sprintf("%s%s", c.Host, c.Endpoint)
+		url = fmt.Sprintf("%s%s", c.host, c.endpoint)
 	}
 
 	return url
@@ -84,13 +84,13 @@ func (c *Changelog) buildUrl() string {
 
 func (c *Changelog) AddExtraHeaders(extra_headers map[string]string) {
 	for k, v := range extra_headers {
-		c.ExtraHeaders[k] = v
+		c.extraHeaders[k] = v
 	}
 }
 
 func (c *Changelog) AddExtraFields(extra_fields map[string]string) {
 	for k, v := range extra_fields {
-		c.ExtraFields[k] = v
+		c.extraFields[k] = v
 	}
 }
 
@@ -98,9 +98,9 @@ func (c *Changelog) buildMessage(message string) (fields map[string]string) {
 	now := time.Now()
 	secs := fmt.Sprintf("%d", now.Unix())
 
-	fields = map[string]string{"criticality": fmt.Sprintf("%d", deferSeverity(c.Severity)), "unix_timestamp": secs, "category": c.Category, "description": message}
+	fields = map[string]string{"criticality": fmt.Sprintf("%d", deferSeverity(c.severity)), "unix_timestamp": secs, "category": c.category, "description": message}
 
-	for k, v := range c.ExtraFields {
+	for k, v := range c.extraFields {
 		fields[k] = v
 	}
 
@@ -109,8 +109,8 @@ func (c *Changelog) buildMessage(message string) (fields map[string]string) {
 }
 
 func (c *Changelog) UseBasicAuth(username string, password string) {
-	c.AuthUser = username
-	c.AuthPassword = password
+	c.authUser = username
+	c.authPassword = password
 }
 
 func (c *Changelog) Send(message string) (response string, err error) {
@@ -127,8 +127,8 @@ func (c *Changelog) Send(message string) (response string, err error) {
 	req.Header.Set("User-Agent", "go-changelog/client")
 
 	// basic auth if username and password is set
-	if c.AuthUser != "" && c.AuthPassword != "" {
-		req.SetBasicAuth(c.AuthUser, c.AuthPassword)
+	if c.authUser != "" && c.authPassword != "" {
+		req.SetBasicAuth(c.authUser, c.authPassword)
 	}
 
 	client := &http.Client{}
