@@ -1,6 +1,6 @@
 # go-changelog
 
-[![Build Status](https://travis-ci.org/woohgit/go-changelog.svg?branch=master)](https://travis-ci.org/woohgit/go-changelog)
+[![GoDoc](https://godoc.org/github.com/woohgit/go-changelog?status.svg)](https://godoc.org/github.com/woohgit/go-changelog) [![Build Status](https://travis-ci.org/woohgit/go-changelog.svg?branch=master)](https://travis-ci.org/woohgit/go-changelog)
 
 go-changelog is a simple package to send events to a [changelog](https://github.com/prezi/changelog) server. Examples can be found below.
 
