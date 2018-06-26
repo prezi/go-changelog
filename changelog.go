@@ -123,6 +123,9 @@ func (c *Changelog) Send(message string) (response string, err error) {
 	}
 
 	req, err := http.NewRequest("POST", c.buildUrl(), jsonMessage)
+	if err != nil {
+		return "", err
+	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "go-changelog/client")
 
@@ -134,7 +137,7 @@ func (c *Changelog) Send(message string) (response string, err error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 	defer resp.Body.Close()
 
