@@ -2,8 +2,9 @@ package changelog
 
 import (
 	"fmt"
-	"gopkg.in/jarcoal/httpmock.v1"
 	"testing"
+
+	"github.com/jarcoal/httpmock"
 )
 
 func assertEqual(t *testing.T, a interface{}, b interface{}, message string) {
